@@ -1,0 +1,61 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define SIZE 250
+#include <math.h>
+float myAtof(char *string, char *error);
+
+int main()
+{
+    char string[SIZE];             // Array declaration.
+    float fnum1;
+    char errorState=0;
+
+    printf("Enter a number:\n");
+    gets(string);
+
+    fnum1=myAtof(string,&errorState);
+
+    if (errorState==0){
+        printf("Your number is: %.2f \n", fnum1);
+    }else if (errorState==1){
+        printf("Error has been occurred due to inappropriate input!\n");
+    }
+
+    return 0;
+}
+
+float myAtof(char* string, char* error){          // Function to convert string into float.  //array,errorstate
+
+    //your code comes here!!
+    float f=0.0;
+    int sign =1; //positive
+    int counter=0;
+    int flag=0;
+
+    if(string[0]=='-'){ //check negative number
+        sign =-1;
+       }
+
+    for (int i = 0; string[i] != '\0'; ++i) {  //tek tek char al 123 i=0,string[0]=1  i=1,string[1]=2,  i=3,string[3]=3;
+
+     if(string[i] == '.') //2.478
+        {
+            flag = 1;
+            continue;
+        }
+        if(flag == 1){ //
+            counter++;
+        }
+     if (string[i]<'0' || string[i]> '9'){  //eðer rakam deðilse yanlýþ bastýr
+           *error = 1;
+     }
+     else{
+         f = f*10 + string[i] - '0'; //f=0+1   //f=1*10+2  //f=12*10+3  sondaki - '0' olmasýnýn sebebi stringlerin hepsinin sonunda \0 olduðu için sondaki 0 atýlýrmýþ??
+        // f *=sign;
+         *error=0;
+     }
+
+ }
+
+ return sign*f/pow(10,counter);
+}
